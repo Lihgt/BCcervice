@@ -21,7 +21,8 @@ public class BCService extends Service {
     public static boolean ready;
     public static String inMessage;
     public static String outMessage;
-    private BCsvcReceiver bcReciever;
+    public static String outCategory;
+    private BCsvcReceiver bcReceiver;
     public BCService() {
         ready = false;
         outMessage = "com.google.android.c2dm.intent.RECEIVE";
@@ -32,10 +33,12 @@ public class BCService extends Service {
     public void onDestroy() {
         ready = false;
         Toast.makeText(this, "Сервис остановлен", Toast.LENGTH_SHORT).show();
-        if(bcReciever != null)
-            unregisterReceiver(bcReciever);
+        if(bcReceiver != null)
+            unregisterReceiver(bcReceiver);
 
         Intent intent = new Intent(outMessage);
+        if(outCategory != null && outCategory.length() > 0)
+            intent.addCategory(outCategory);
         intent.putExtra("text", "Сервис остановлен");
         this.sendBroadcast(intent);
 
@@ -54,10 +57,11 @@ public class BCService extends Service {
             inMessage = sharedPreferences.getString("edInMessage", "");
             bcName = sharedPreferences.getString("edInField", "barcode");
             outMessage = sharedPreferences.getString("edOutMessage", "");
+            outCategory = sharedPreferences.getString("edOutCategory", "");
             eventId = sharedPreferences.getString("edEventID", "1");
             baseId = sharedPreferences.getString("edBaseId", null);
-            bcReciever = new BCsvcReceiver();
-            registerReceiver(bcReciever, new IntentFilter(inMessage));
+            bcReceiver = new BCsvcReceiver();
+            registerReceiver(bcReceiver, new IntentFilter(inMessage));
 
             Intent notificationIntent = new Intent(this, MainActivity.class);
 

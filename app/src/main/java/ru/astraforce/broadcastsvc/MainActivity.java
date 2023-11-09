@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etInMessage;
     EditText etInField;
     EditText etOutMessage;
+    EditText etOutCategory;
     EditText etEventId;
     EditText etBaseId;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etInMessage = findViewById(R.id.teInMessage);
         etInField = findViewById(R.id.teInField);
         etOutMessage = findViewById(R.id.teOutMessage);
+        etOutCategory = findViewById(R.id.teOutCategory);
         etEventId = findViewById(R.id.teEventId);
         etBaseId = findViewById(R.id.teBaseId);
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setPref(sharedPreferences, etInMessage, "edInMessage", "scan.rcv.message");
         setPref(sharedPreferences, etInField, "edInField", "barcode");
         setPref(sharedPreferences, etOutMessage, "edOutMessage", "com.google.android.c2dm.intent.RECEIVE");
+        setPref(sharedPreferences, etOutCategory, "edOutCategory", "com.google.android.gms");
         setPref(sharedPreferences, etEventId, "edEventId", "1");
         setPref(sharedPreferences, etBaseId, "edBaseId", "");
 
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etInMessage.setEnabled(!inWork);
         etInField.setEnabled(!inWork);
         etOutMessage.setEnabled(!inWork);
+        etOutCategory.setEnabled(!inWork);
         etEventId.setEnabled(!inWork);
         etBaseId.setEnabled(!inWork);
     }
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putString("edInField", etInField.getText().toString());
         editor.apply();
         editor.putString("edOutMessage", etOutMessage.getText().toString());
+        editor.apply();
+        editor.putString("edOutCategory", etOutCategory.getText().toString());
         editor.apply();
         editor.putString("edEventId", etEventId.getText().toString());
         editor.apply();

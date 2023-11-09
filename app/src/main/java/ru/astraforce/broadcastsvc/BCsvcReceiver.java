@@ -28,6 +28,8 @@ public class BCsvcReceiver extends BroadcastReceiver {
 
         if (barcode != null && barcode.length() > 0) {
             Intent intent = new Intent(BCService.outMessage);
+            if(BCService.outCategory != null && BCService.outCategory.length() > 0)
+                intent.addCategory(BCService.outCategory);
             intent.putExtra("text", BCService.eventId);
             intent.putExtra("title", "1C");
             intent.putExtra("data", barcode);
