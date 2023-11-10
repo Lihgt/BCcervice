@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -30,6 +31,23 @@ public class BCService extends Service {
     }
 
     @Override
+    public IBinder onBind(Intent intent) {
+        Toast.makeText(this, "MyService onBind", Toast.LENGTH_SHORT).show();
+        return new Binder("astraforce");
+    }
+
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+        Toast.makeText(this, "MyService onRebind", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Toast.makeText(this, "MyService onUnbind", Toast.LENGTH_SHORT).show();
+        return super.onUnbind(intent);
+    }
+    @Override
     public void onDestroy() {
         ready = false;
         Toast.makeText(this, "Сервис остановлен", Toast.LENGTH_SHORT).show();
@@ -45,11 +63,6 @@ public class BCService extends Service {
         super.onDestroy();
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Нет внешнего подключения ... еще");
-    }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         SharedPreferences sharedPreferences = getSharedPreferences("bcsvc_settings", 0);
