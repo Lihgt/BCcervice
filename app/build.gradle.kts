@@ -11,10 +11,9 @@ android {
         minSdk = 29
         targetSdk = 33
         versionCode = 1
-        versionName = "1.1"
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        versionNameSuffix = "boottest"
     }
 
     buildTypes {

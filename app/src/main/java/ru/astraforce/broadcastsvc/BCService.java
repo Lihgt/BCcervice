@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ public class BCService extends Service {
     public BCService() {
         ready = false;
         outMessage = "com.google.android.c2dm.intent.RECEIVE";
-        bcName = "barcode";
+        bcName = "DATA";
         lastBC = "";
     }
 
@@ -56,13 +55,28 @@ public class BCService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         SharedPreferences sharedPreferences = getSharedPreferences("bcsvc_settings", 0);
-        if (sharedPreferences.contains("edInMessage")) {
-            inMessage = sharedPreferences.getString("edInMessage", "");
-            bcName = sharedPreferences.getString("edInField", "barcode");
-            outMessage = sharedPreferences.getString("edOutMessage", "");
-            outCategory = sharedPreferences.getString("edOutCategory", "");
-            eventId = sharedPreferences.getString("edEventID", "1");
-            baseId = sharedPreferences.getString("edBaseId", null);
+        if (!sharedPreferences.contains("edInMessage")) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("edInMessage", "");
+            editor.apply();
+            editor.putString("edInField", "DATA");
+            editor.apply();
+            editor.putString("edOutMessage", "com.google.android.c2dm.intent.RECEIVE");
+            editor.apply();
+            editor.putString("edOutCategory", "com.google.android.gms");
+            editor.apply();
+            editor.putString("edEventId", "1");
+            editor.apply();
+            editor.putString("edBaseId", "");
+            editor.apply();
+        }
+        inMessage = sharedPreferences.getString("edInMessage", "");
+        bcName = sharedPreferences.getString("edInField", "barcode");
+        outMessage = sharedPreferences.getString("edOutMessage", "");
+        outCategory = sharedPreferences.getString("edOutCategory", "");
+        eventId = sharedPreferences.getString("edEventID", "1");
+        baseId = sharedPreferences.getString("edBaseId", null);
+        if(inMessage.length() > 0) {
             bcReceiver = new BCsvcReceiver();
             registerReceiver(bcReceiver, new IntentFilter(inMessage));
 
@@ -83,7 +97,7 @@ public class BCService extends Service {
             Toast.makeText(this, "Ожидание оповещений от сканера", Toast.LENGTH_SHORT).show();
         }
         else
-            Toast.makeText(this, "Оповещения НЕ принимаются!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Оповещение НЕ настроено", Toast.LENGTH_SHORT).show();
 
         lastBC = "";
         return START_STICKY;

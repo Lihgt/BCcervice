@@ -25,7 +25,7 @@ public class BCsvcReceiver extends BroadcastReceiver {
             barcode = new String(arrayOfByte, 0, l);
         }
         else barcode = o.toString();
-
+        /*
         if (barcode != null && barcode.length() > 0) {
             Intent intent = new Intent(BCService.outMessage);
             if(BCService.outCategory != null && BCService.outCategory.length() > 0)
@@ -38,6 +38,7 @@ public class BCsvcReceiver extends BroadcastReceiver {
 
             context.sendBroadcast(intent);
         }
+        */
 
         BCService.lastBC = barcode;
     }
