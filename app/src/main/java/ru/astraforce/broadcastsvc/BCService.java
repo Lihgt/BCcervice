@@ -16,6 +16,7 @@ public class BCService extends Service {
     public static final String NOTIF_CHANNEL_Name = "Channel_Id";
     public static final String NOTIF_CHANNEL_Desc = "Channel_Id";
 
+    public static String lastBC;
     public static String eventId;
     public static String bcName;
     public static String baseId;
@@ -28,28 +29,17 @@ public class BCService extends Service {
         ready = false;
         outMessage = "com.google.android.c2dm.intent.RECEIVE";
         bcName = "barcode";
+        lastBC = "";
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        Toast.makeText(this, "MyService onBind", Toast.LENGTH_SHORT).show();
-        return new Binder("astraforce");
+    public IBinder onBind(Intent intent){
+        throw new UnsupportedOperationException("Bind не реализован");
     }
 
-    @Override
-    public void onRebind(Intent intent) {
-        super.onRebind(intent);
-        Toast.makeText(this, "MyService onRebind", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        Toast.makeText(this, "MyService onUnbind", Toast.LENGTH_SHORT).show();
-        return super.onUnbind(intent);
-    }
     @Override
     public void onDestroy() {
         ready = false;
+        lastBC = "";
         Toast.makeText(this, "Сервис остановлен", Toast.LENGTH_SHORT).show();
         if(bcReceiver != null)
             unregisterReceiver(bcReceiver);
@@ -90,11 +80,12 @@ public class BCService extends Service {
                     .setContentIntent(pendingIntent)
                     .build());
             ready = true;
-            Toast.makeText(this, "Ожидание оповещения", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ожидание оповещений от сканера", Toast.LENGTH_SHORT).show();
         }
         else
             Toast.makeText(this, "Оповещения НЕ принимаются!", Toast.LENGTH_SHORT).show();
 
+        lastBC = "";
         return START_STICKY;
     }
 }

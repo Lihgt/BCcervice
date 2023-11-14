@@ -38,5 +38,7 @@ public class BCsvcReceiver extends BroadcastReceiver {
 
             context.sendBroadcast(intent);
         }
+
+        BCService.lastBC = barcode;
     }
 }
