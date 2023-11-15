@@ -10,7 +10,7 @@ android {
         applicationId = "ru.astraforce.broadcastsvc"
         minSdk = 29
         targetSdk = 33
-        versionCode = 1
+        versionCode = 3
         versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

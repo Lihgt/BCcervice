@@ -12,8 +12,15 @@ public class BCsvcReceiver extends BroadcastReceiver {
         String barcode;
         String bcName = BCService.bcName;
         Object o = parmintent.getExtras() != null ? parmintent.getExtras().get(bcName) : null;
-        if(o == null)
-        {
+        if(o == null){
+            bcName = "DATA";
+            o = parmintent.getExtras() != null ? parmintent.getExtras().get(bcName) : null;
+        }
+        if(o == null){
+            bcName = "BarcodeData";
+            o = parmintent.getExtras() != null ? parmintent.getExtras().get(bcName) : null;
+        }
+        if(o == null){
             Toast.makeText(context, "В данных нет ШК! ("+bcName+")", Toast.LENGTH_SHORT).show();
             return;
         }

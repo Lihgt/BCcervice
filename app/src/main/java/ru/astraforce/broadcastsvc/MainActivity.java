@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setControls(boolean inWork){
         SharedPreferences sharedPreferences = getSharedPreferences("bcsvc_settings", 0);
-        setPref(sharedPreferences, etInMessage, "edInMessage", "scan.rcv.message");
-        setPref(sharedPreferences, etInField, "edInField", "barcode");
+        setPref(sharedPreferences, etInMessage, "edInMessage", "ActionName");
+        setPref(sharedPreferences, etInField, "edInField", "BarcodeData");
         setPref(sharedPreferences, etOutMessage, "edOutMessage", "com.google.android.c2dm.intent.RECEIVE");
         setPref(sharedPreferences, etOutCategory, "edOutCategory", "com.google.android.gms");
         setPref(sharedPreferences, etEventId, "edEventId", "1");

@@ -15,7 +15,7 @@ public class BCService extends Service {
     public static final String NOTIF_CHANNEL_Name = "Channel_Id";
     public static final String NOTIF_CHANNEL_Desc = "Channel_Id";
 
-    public static final String VERSION = "1.2.1";
+    public static final String VERSION = "1.2.3";
 
     public static String lastBC;
     public static String eventId;
@@ -26,6 +26,8 @@ public class BCService extends Service {
     public static String outMessage;
     public static String outCategory;
     private BCsvcReceiver bcReceiver;
+    private BCsvcReceiver bcReceiverATOL;
+    private BCsvcReceiver bcReceiverASTRA;
     public BCService() {
         ready = false;
         outMessage = "com.google.android.c2dm.intent.RECEIVE";
@@ -44,6 +46,10 @@ public class BCService extends Service {
         Toast.makeText(this, "Сервис остановлен", Toast.LENGTH_SHORT).show();
         if(bcReceiver != null)
             unregisterReceiver(bcReceiver);
+        if(bcReceiverATOL != null)
+            unregisterReceiver(bcReceiverATOL);
+        if(bcReceiverASTRA != null)
+            unregisterReceiver(bcReceiverASTRA);
 
         Intent intent = new Intent(outMessage);
         if(outCategory != null && outCategory.length() > 0)
@@ -59,9 +65,9 @@ public class BCService extends Service {
         SharedPreferences sharedPreferences = getSharedPreferences("bcsvc_settings", 0);
         if (!sharedPreferences.contains("edInMessage")) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("edInMessage", "");
+            editor.putString("edInMessage", "ActionName");
             editor.apply();
-            editor.putString("edInField", "DATA");
+            editor.putString("edInField", "BarcodeData");
             editor.apply();
             editor.putString("edOutMessage", "com.google.android.c2dm.intent.RECEIVE");
             editor.apply();
@@ -81,6 +87,10 @@ public class BCService extends Service {
         if(inMessage.length() > 0) {
             bcReceiver = new BCsvcReceiver();
             registerReceiver(bcReceiver, new IntentFilter(inMessage));
+            bcReceiverATOL = new BCsvcReceiver();
+            registerReceiver(bcReceiverATOL, new IntentFilter("BARCODE_ACTION_NAME"));
+            bcReceiverASTRA = new BCsvcReceiver();
+            registerReceiver(bcReceiverASTRA, new IntentFilter("ActionName"));
 
             Intent notificationIntent = new Intent(this, MainActivity.class);
 
