@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etOutCategory;
     EditText etEventId;
     EditText etBaseId;
+    TextView tvVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etOutCategory = findViewById(R.id.teOutCategory);
         etEventId = findViewById(R.id.teEventId);
         etBaseId = findViewById(R.id.teBaseId);
+        tvVersion = findViewById(R.id.tvVersion);
+
+        tvVersion.setText("Астрафорс © 2023" + "\n" + "версия " + BCService.VERSION);
 
         this.setControls(false);
 

@@ -30,7 +30,7 @@ public class GetData extends AppCompatActivity {
                     break;
                 case "ru.astraforce.START_SERVICE":
                     startService(new Intent(this, BCService.class));
-                    intent.putExtra("version", "1.2.1");
+                    intent.putExtra("version", BCService.VERSION);
                     intent.putExtra("inMessage", BCService.inMessage);
                     intent.putExtra("bcName", BCService.bcName);
                     break;
