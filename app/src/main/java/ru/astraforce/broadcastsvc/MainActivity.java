@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,18 +41,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnStart.setOnClickListener(this);
         btnStop.setOnClickListener(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = BCService.NOTIF_CHANNEL_Name;
-            String description = BCService.NOTIF_CHANNEL_Desc;
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(BCService.NOTIF_CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system. You can't change the importance
-            // or other notification behaviors after this.
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
 
+        CharSequence name = BCService.NOTIF_CHANNEL_Name;
+        String description = BCService.NOTIF_CHANNEL_Desc;
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(BCService.NOTIF_CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+        // Register the channel with the system. You can't change the importance
+        // or other notification behaviors after this.
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
     }
 
     private void setPref(SharedPreferences shPref, EditText et, String prefName, String defValue){
@@ -110,11 +106,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v.getId() == R.id.btnStart){
             this.savePreferences();
-            startService(new Intent((Context)this, BCService.class));
+            startService(new Intent(this, BCService.class));
             this.setControls(true);
         }
         else if(v.getId() == R.id.btnStop){
-            stopService(new Intent((Context)this, BCService.class));
+            stopService(new Intent(this, BCService.class));
             this.setControls(false);
         }
     }

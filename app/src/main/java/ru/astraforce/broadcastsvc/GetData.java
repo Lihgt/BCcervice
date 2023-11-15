@@ -3,10 +3,8 @@ package ru.astraforce.broadcastsvc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class GetData extends AppCompatActivity {
 
@@ -18,35 +16,32 @@ public class GetData extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent i = getIntent();
+        Intent intent = getIntent();
 
         try {
-            switch (i.getAction()){
+            switch (intent.getAction()) {
                 case "ru.astraforce.GET_BARCODE":
-                    if(BCService.lastBC != null && BCService.lastBC.length() > 0)
-                        i.putExtra("barcode", BCService.lastBC);
+                    if (BCService.lastBC != null && BCService.lastBC.length() > 0)
+                        intent.putExtra("barcode", BCService.lastBC);
                     break;
                 case "ru.astraforce.GET_PARAMS":
-                    i.putExtra("inMessage", BCService.inMessage);
-                    i.putExtra("bcName", BCService.bcName);
-                    break;
-                case "ru.astraforce.SET_PARAMS":
-                    i.putExtra("barcode", "234234234");//BCService.lastBC);
+                    intent.putExtra("inMessage", BCService.inMessage);
+                    intent.putExtra("bcName", BCService.bcName);
                     break;
                 case "ru.astraforce.START_SERVICE":
-                    startService(new Intent((Context)this, BCService.class));
-                    i.putExtra("version", "1.2.1");
-                    i.putExtra("inMessage", BCService.inMessage);
-                    i.putExtra("bcName", BCService.bcName);
+                    startService(new Intent(this, BCService.class));
+                    intent.putExtra("version", "1.2.1");
+                    intent.putExtra("inMessage", BCService.inMessage);
+                    intent.putExtra("bcName", BCService.bcName);
                     break;
                 case "ru.astraforce.STOP_SERVICE":
-                    stopService(new Intent((Context)this, BCService.class));
+                    stopService(new Intent(this, BCService.class));
                     break;
             }
-            setResult(Activity.RESULT_OK, i);
+            setResult(Activity.RESULT_OK, intent);
         } catch (Exception e) {
-            i.putExtra("error", e.getMessage());
-            setResult(0, i);
+            intent.putExtra("error", e.getMessage());
+            setResult(0, intent);
         }
 
         BCService.lastBC = "";
