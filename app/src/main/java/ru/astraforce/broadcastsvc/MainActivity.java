@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnStop.setOnClickListener(this);
 
 
-        CharSequence name = BCService.NOTIF_CHANNEL_Name;
-        String description = BCService.NOTIF_CHANNEL_Desc;
+        CharSequence name = BCService.NOTIFY_CHANNEL_Name;
+        String description = BCService.NOTIFY_CHANNEL_Desc;
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel(BCService.NOTIF_CHANNEL_ID, name, importance);
+        NotificationChannel channel = new NotificationChannel(BCService.NOTIFY_CHANNEL_ID, name, importance);
         channel.setDescription(description);
         // Register the channel with the system. You can't change the importance
         // or other notification behaviors after this.

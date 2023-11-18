@@ -10,10 +10,10 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 public class BCService extends Service {
-    public static final int NOTIF_ID = 1;
-    public static final String NOTIF_CHANNEL_ID = "Channel_Id";
-    public static final String NOTIF_CHANNEL_Name = "Channel_Id";
-    public static final String NOTIF_CHANNEL_Desc = "Channel_Id";
+    public static final int NOTIFY_ID = 1;
+    public static final String NOTIFY_CHANNEL_ID = "AstraBroadcast_ChanId";
+    public static final String NOTIFY_CHANNEL_Name = "Astraforce Broadcast";
+    public static final String NOTIFY_CHANNEL_Desc = "Broadcast service notification";
 
     public static final String VERSION = "1.2.3";
 
@@ -88,7 +88,7 @@ public class BCService extends Service {
             bcReceiver = new BCsvcReceiver();
             registerReceiver(bcReceiver, new IntentFilter(inMessage));
             bcReceiverATOL = new BCsvcReceiver();
-            registerReceiver(bcReceiverATOL, new IntentFilter("BARCODE_ACTION_NAME"));
+            registerReceiver(bcReceiverATOL, new IntentFilter("BARCODE_DECODING_BROADCAST"));
             bcReceiverASTRA = new BCsvcReceiver();
             registerReceiver(bcReceiverASTRA, new IntentFilter("ActionName"));
 
@@ -97,8 +97,8 @@ public class BCService extends Service {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                     notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
-            startForeground(NOTIF_ID, new Notification.Builder(this,
-                    NOTIF_CHANNEL_ID) // don't forget create a notification channel first
+            startForeground(NOTIFY_ID, new Notification.Builder(this,
+                    NOTIFY_CHANNEL_ID) // don't forget create a notification channel first
                     .setOngoing(true)
                     .setSmallIcon(R.drawable.ic_astrastat_name)
                     .setContentTitle(getString(R.string.app_name))
